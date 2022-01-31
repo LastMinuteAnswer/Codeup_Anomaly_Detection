@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 def get_url(db):
     '''
@@ -48,3 +49,34 @@ def wrangle_logs():
     This function acquires and prepares the curriculum access logs data.
     '''
     return prep_logs(acquire_logs())
+
+def s_wrangle():
+    '''
+    This function takes no arguments and prepares the curriculum log data for exploration
+    to answer my half of the questions.
+    '''
+    student_logs = wrangle_logs()
+    student_logs = student_logs[(student_logs.name != 'Staff') & (~student_logs.path.isin(['/', 'appendix', 'appendix/further-reading', 'toc']))]
+    student_logs.dropna(inplace=True)
+    student_logs['split_path'] = student_logs.path.str.split('/')
+    student_logs['module'] = [lst[0] for lst in student_logs.split_path]
+    # get sub-path for each content log
+    content = student_logs[student_logs.module == 'content']
+    content['cont_mod'] = [av[1] for av in content.split_path]
+    # get sub-path for each appendix log
+    appendix_views = content[content.module == 'appendix']
+    appendix_views['ap_mod'] = [av[1] for av in appendix_views.split_path]
+    # drop further-reading main page access logs
+    ap_further_reading = appendix_views[(appendix_views.ap_mod == 'further-reading') & (appendix_views.path != 'appendix/further-reading')]
+    # get sub-paths for each further-reading log within the appendix
+    ap_further_reading['fr_mod'] = [fr[2] for fr in ap_further_reading.split_path]
+    # add sub-path columns to curriculum access logs
+    merged = pd.merge(student_logs, ap_further_reading[['cont_mod', 'ap_mod', 'fr_mod']], how='left', left_index=True, right_index=True)
+    # combine columns
+    merged['lesson'] = np.where(merged.cont_mod.isnull(), merged.module, merged.cont_mod)
+    merged['lesson'] = np.where(merged.ap_mod.isnull(), merged.lesson, merged.ap_mod)
+    merged['lesson'] = np.where(merged.fr_mod.isnull(), merged.lesson, merged.fr_mod)
+    # drop unnecessary columns
+    merged.drop(columns=['module', 'cont_mod', 'ap_mod', 'fr_mod', 'split_path'], inplace=True)
+    merged = merged[~merged.lesson.isin(['appendix', 'content', 'further-reading'])]
+    return merged
