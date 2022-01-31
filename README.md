@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="Images/codeup_logo.png" alt="Codeup Logo" title="Codeup Logo" width="226" height="86" align="center"/>      
+<img src="Images/codeup_logo.png" alt="Codeup Logo" title="Codeup Logo" width="452" height="172" align="center"/>      
 
 # README
 
@@ -14,7 +14,7 @@
 
 # Project Description
 ### What Is Codeup?
-Codeup is a bootcamp that includes gaining the technical knowledge and skillset of a web developer or data scientist, expert instruction, hands-on curriculum with a portfolio to show employers, a close family of your Codeup classmates, a network of technology professionals to connect with, career preparation, continuing job search support even after you graduate, and the peace of mind that if you don’t get hired within 6 months of graduating, you’ll get your tuition back (codeup.com/refund). We also offer a great Return on Investment, one of the best you’ll find.
+Codeup is a bootcamp that includes gaining the technical knowledge and skillset of a web developer or data scientist, expert instruction, hands-on curriculum with a portfolio to show employers, a close family of your Codeup classmates, a network of technology professionals to connect with, career preparation, continuing job search support even after you graduate, and the peace of mind that if you don’t get hired within 6 months of graduating, you’ll get your tuition back.
   
 ### What is this about?
 Although Codeup is a well awarded boot camp for its alumni sucess, it does so by creating a throughly vetted curriculum that is constantly updated. Students only have access to these curriculum websites via thier student emails, which helps to prevent or minimize possible web scraping attempts to this prestigious curriculum. Codeup keeps a database of log entries to both thier web development curriculum and thier data science curriculum. By analyzing these logs, we hope to find out if there have been any web scraping attempts, which lessons are perhaps most read by students, and which lessons alumni refer to after graduation. 
